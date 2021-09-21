@@ -1,0 +1,35 @@
+{
+  "canisters": {
+    "midish": {
+      "main": "src/midish/main.mo",
+      "type": "motoko"
+    },
+    "midish_assets": {
+      "dependencies": [
+        "midish"
+      ],
+      "frontend": {
+        "entrypoint": "src/midish_assets/src/index.html"
+      },
+      "source": [
+        "src/midish_assets/assets",
+        "dist/midish_assets/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "dfx": "0.8.0",
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}

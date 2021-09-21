@@ -1,0 +1,60 @@
+type RatingType = 
+ variant {
+   own;
+   pub;
+ };
+type RatingScore = 
+ variant {
+   five;
+   four;
+   one;
+   three;
+   two;
+ };
+type Rating = 
+ record {
+   ratingType: RatingType;
+   score: RatingScore;
+ };
+type MealType = 
+ variant {
+   breakfast;
+   dinner;
+   lunch;
+ };
+type Ingredient = text;
+type Image = text;
+type DishType = 
+ record {
+   id: nat;
+   name: text;
+   parent: nat;
+ };
+type DishName = 
+ record {
+   cusine: text;
+   name: text;
+ };
+type DishId = nat32;
+type DishConcept = 
+ record {
+   dish: Dish;
+   dishId: DishId;
+ };
+type Dish = 
+ record {
+   defaultImage: Image;
+   defaultName: DishName;
+   description: text;
+   dishType: DishType;
+   images: vec Image;
+   ingredients: vec Ingredient;
+   mealType: MealType;
+   name: vec DishName;
+   ratings: vec Rating;
+ };
+service : {
+  addDish: (Dish) -> ();
+  getAllDishes: () -> (vec DishConcept) query;
+  getDish: (DishId) -> (opt Dish) query;
+}
