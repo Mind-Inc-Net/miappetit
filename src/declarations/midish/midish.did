@@ -16,19 +16,51 @@ type Rating =
    ratingType: RatingType;
    score: RatingScore;
  };
+type MealType__1 = 
+ record {
+   description: text;
+   imageUrl: text;
+   mealTypeId: nat;
+   name: text;
+   timeFrom: text;
+   timeTo: text;
+ };
+type MealTypeId = nat32;
+type MealTypeConcept = 
+ record {
+   mealType: MealType;
+   mealTypeId: MealTypeId;
+ };
 type MealType = 
- variant {
-   breakfast;
-   dinner;
-   lunch;
+ record {
+   description: text;
+   imageUrl: text;
+   mealTypeId: nat;
+   name: text;
+   timeFrom: text;
+   timeTo: text;
  };
 type Ingredient = text;
 type Image = text;
+type DishType__1 = 
+ record {
+   description: text;
+   dishTypeId: nat;
+   name: text;
+   parentDishTypeId: nat;
+ };
+type DishTypeId = nat32;
+type DishTypeConcept = 
+ record {
+   dishType: DishType;
+   dishTypeId: DishTypeId;
+ };
 type DishType = 
  record {
-   id: nat;
+   description: text;
+   dishTypeId: nat;
    name: text;
-   parent: nat;
+   parentDishTypeId: nat;
  };
 type DishName = 
  record {
@@ -46,15 +78,40 @@ type Dish =
    defaultImage: Image;
    defaultName: DishName;
    description: text;
-   dishType: DishType;
+   dishType: DishType__1;
    images: vec Image;
    ingredients: vec Ingredient;
-   mealType: MealType;
+   mealType: MealType__1;
    name: vec DishName;
    ratings: vec Rating;
  };
+type CuisineId = nat32;
+type CuisineConcept = 
+ record {
+   cuisine: Cuisine;
+   cuisineId: CuisineId;
+ };
+type Cuisine = 
+ record {
+   cuisinePath: text;
+   description: text;
+   image: text;
+   isEthnic: bool;
+   name: text;
+   parentCuisineId: nat32;
+   triviaId: nat32;
+ };
 service : {
+  addCuisine: (Cuisine) -> ();
   addDish: (Dish) -> ();
+  addDishType: (DishType) -> ();
+  addMealType: (MealType) -> ();
+  getAllCuisines: () -> (vec CuisineConcept) query;
+  getAllDishTypes: () -> (vec DishTypeConcept) query;
   getAllDishes: () -> (vec DishConcept) query;
+  getAllMealTypes: () -> (vec MealTypeConcept) query;
+  getCuisine: (CuisineId) -> (opt Cuisine) query;
   getDish: (DishId) -> (opt Dish) query;
+  getDishType: (DishTypeId) -> (opt DishType) query;
+  getMealType: (MealTypeId) -> (opt MealType) query;
 }
